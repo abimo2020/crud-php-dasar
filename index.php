@@ -38,7 +38,7 @@
             <td><?=$mhs["nim"];?></td>
             <td><?=$mhs["jurusan"];?></td>
             <td><img src="foto/<?=$mhs["foto"];?>" alt=""></td>
-            <td><a href="">Ubah</a> / <a href="">Hapus</a></td>
+            <td><a href="ubah.php?id=<?=$mhs['id'];?>">Ubah</a> / <a href="hapus.php?id=<?=$mhs['id']?>">Hapus</a></td>
         </tr>
         <?php $i++?>
         <?php endforeach;?>
