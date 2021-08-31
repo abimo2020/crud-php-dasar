@@ -19,7 +19,7 @@
 </head>
 <body>
     <h1 style="text-align: center; font-family:'Times New Roman', Times, serif">Daftar Mahasiswa</h1>
-    <a href="">Tambah Data</a> | <a href="">Logout</a>
+    <a href="tambah.php">Tambah Data</a> | <a href="">Logout</a>
     <br><br>
     <table border="1" cellspacing="0" cellpadding="10">
         <tr>
@@ -37,7 +37,7 @@
             <td><?=$mhs["nama"];?></td>
             <td><?=$mhs["nim"];?></td>
             <td><?=$mhs["jurusan"];?></td>
-            <td><img src="<?=$mhs["foto"];?>" alt=""></td>
+            <td><img src="foto/<?=$mhs["foto"];?>" alt=""></td>
             <td><a href="">Ubah</a> / <a href="">Hapus</a></td>
         </tr>
         <?php $i++?>
