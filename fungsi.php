@@ -4,6 +4,7 @@
     function query($query){
         global $conn;
         mysqli_query($conn,$query);
+        return mysqli_affected_rows($conn);
     }
     function ambilData($query){
         global $conn;
@@ -47,7 +48,6 @@
     }
 
     function tambahData($data){
-        global $conn;
         $nama = htmlspecialchars($data["nama"]);
         $nim = htmlspecialchars($data["nim"]);
         $jurusan = htmlspecialchars($data["jurusan"]);
@@ -55,7 +55,20 @@
         if(!$foto){
             return 0;
         }
-        query("INSERT INTO mahasiswa VALUES('','$nama','$nim','$jurusan','$foto')");
-        return mysqli_affected_rows($conn);
+        return query("INSERT INTO mahasiswa VALUES('','$nama','$nim','$jurusan','$foto')");
+        
+    }
+    function ubah($data){
+        $nama = htmlspecialchars($data["nama"]);
+        $nim = htmlspecialchars($data["nim"]);
+        $jurusan = htmlspecialchars($data["jurusan"]);
+        $fotoLama = $data['fotoLama'];
+        if($_FILES['foto']['error']===4){
+            $foto = $data['fotoLama'];
+        }else{
+            $foto = upload();
+        }
+        return query("UPDATE mahasiswa SET nama='$nama',nim='$nim',jurusan='$jurusan',foto='$foto'");
+
     }
 ?>
