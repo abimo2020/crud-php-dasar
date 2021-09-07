@@ -1,4 +1,9 @@
 <?php
+    session_start();
+    if(!isset($_SESSION['login'])){
+        header('Location: login.php');
+        exit;
+    }
     require 'fungsi.php';
 
     $mahasiswa = ambilData("SELECT * FROM mahasiswa");
@@ -19,7 +24,7 @@
 </head>
 <body>
     <h1 style="text-align: center; font-family:'Times New Roman', Times, serif">Daftar Mahasiswa</h1>
-    <a href="tambah.php">Tambah Data</a> | <a href="">Logout</a>
+    <a href="tambah.php">Tambah Data</a> | <a href="logout.php">Logout</a>
     <br><br>
     <table border="1" cellspacing="0" cellpadding="10">
         <tr>

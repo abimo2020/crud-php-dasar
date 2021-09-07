@@ -71,4 +71,23 @@
         return query("UPDATE mahasiswa SET nama='$nama',nim='$nim',jurusan='$jurusan',foto='$foto'");
 
     }
+    function daftar($data){
+        global $conn;
+
+        $username = stripslashes($data["username"]);
+        $password = mysqli_real_escape_string($conn,$data["password"]);
+        $password2 = mysqli_real_escape_string($conn,$data["password2"]);
+
+        if($password !== $password2){
+            echo "<script>alert('Password yang dimasukkan harus sama')</script>";
+            return 0;
+        }
+        $result = mysqli_query($conn,"SELECT * FROM user WHERE username='$username'");
+        if(mysqli_fetch_assoc($result)){
+            echo "<script>alert('Username telah terpakai')</script>";
+            return 0;
+        }
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        return query("INSERT INTO user VALUES ('','$username','$password')");
+    }
 ?>
