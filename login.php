@@ -1,14 +1,23 @@
 <?php
     session_start();
+    require 'fungsi.php';
+
+    if(isset($_COOKIE['id'])&&isset($_COOKIE['user'])){
+        $id = $_COOKIE['id'];
+        $user = $_COOKIE['user'];
+        $result = mysqli_query($conn,"SELECT username FROM user WHERE id = $id");
+        $data = mysqli_fetch_assoc($result);
+
+        if($user == hash('sha256',$data['username'])){
+            $_SESSION['login'] = 1;
+            exit;
+        }
+    }
+
     if(isset($_SESSION['login'])){
         header('Location: index.php');
-        exit;
     }
-    require 'fungsi.php';
-    global $conn;
-
     
-
     if(isset($_POST['login'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -18,6 +27,10 @@
             $data = mysqli_fetch_assoc($result);
             if(password_verify($password,$data['password'])){
                 $_SESSION['login'] = 1;
+                if($_POST['remember']){
+                    setcookie('id',$data['id'],time()+60*60*24*30);
+                    setcookie('user',hash('sha256',$username),time()+60*60*24*30);
+                }
                 header('Location: index.php');
                 exit;
             }
@@ -55,6 +68,10 @@
             <li>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password">
+            </li>
+            <li>
+                <label for="remember">Remember me!</label>
+                <input type="checkbox" name="remember" id="remember">
             </li>
             <li>
                 <button type="submit" name="login">Login</button>
